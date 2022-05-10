@@ -5,6 +5,13 @@ import * as React from "react";
 
 import { createNote } from "~/models/note.server";
 import { requireUserId } from "~/session.server";
+import { Button, links as buttonLinks } from '../../components/button/button';
+
+export const links = () => {
+  return [
+    ...buttonLinks(),
+  ]
+}
 
 type ActionData = {
   errors?: {
@@ -102,11 +109,9 @@ export default function NewNotePage() {
       </div>
 
       <div>
-        <button
-          type="submit"
-        >
+        <Button type="submit">
           Save
-        </button>
+        </Button>
       </div>
     </Form>
   );

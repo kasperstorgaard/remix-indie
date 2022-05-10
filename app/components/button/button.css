@@ -1,0 +1,6 @@
+.ri-button {
+  padding: var(--size-fluid-1);
+
+  border-radius: var(--radius-conditional-2);
+  text-transform: uppercase;
+}
