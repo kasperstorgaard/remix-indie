@@ -15,9 +15,18 @@ import {
 
 import { getUser } from "./session.server";
 
+import tokenStylesUrl from './styles/tokens.css';
+import globalStylesUrl from './styles/global.css';
+import typographyStylesUrl from './styles/typography.css';
+
 export const links: LinksFunction = () => {
-  // return [{ rel: "stylesheet", href: tailwindStylesheetUrl }];
-  return [];
+  return [
+    { rel: 'stylesheet', href: 'https://unpkg.com/open-props' },
+    { rel: 'stylesheet', href: 'https://unpkg.com/open-props/normalize.min.css' },
+    { rel: 'stylesheet', href: tokenStylesUrl },
+    { rel: 'stylesheet', href: globalStylesUrl },
+    { rel: 'stylesheet', href: typographyStylesUrl },
+  ];
 };
 
 export const meta: MetaFunction = () => ({
