@@ -1,5 +1,6 @@
 import type {
   ActionFunction,
+  LinksFunction,
   LoaderFunction,
   MetaFunction,
 } from "@remix-run/node";
@@ -10,6 +11,8 @@ import * as React from "react";
 import { createUserSession, getUserId } from "~/session.server";
 import { verifyLogin } from "~/models/user.server";
 import { safeRedirect, validateEmail } from "~/utils";
+
+import stylesUrl from './login.css';
 
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request);
@@ -69,6 +72,12 @@ export const action: ActionFunction = async ({ request }) => {
   });
 };
 
+export const links: LinksFunction = () => {
+  return [
+    { rel: 'stylesheet', href: stylesUrl },
+  ];
+}
+
 export const meta: MetaFunction = () => {
   return {
     title: "Login",
@@ -91,92 +100,81 @@ export default function LoginPage() {
   }, [actionData]);
 
   return (
-    <div>
-      <div>
-        <Form method="post">
-          <div>
-            <label
-              htmlFor="email"
-            >
-              Email address
-            </label>
-            <div>
-              <input
-                ref={emailRef}
-                id="email"
-                required
-                autoFocus={true}
-                name="email"
-                type="email"
-                autoComplete="email"
-                aria-invalid={actionData?.errors?.email ? true : undefined}
-                aria-describedby="email-error"
-              />
-              {actionData?.errors?.email && (
-                <div>
-                  {actionData.errors.email}
-                </div>
-              )}
-            </div>
-          </div>
-
-          <div>
-            <label
-              htmlFor="password"
-            >
-              Password
-            </label>
-            <div>
-              <input
-                id="password"
-                ref={passwordRef}
-                name="password"
-                type="password"
-                autoComplete="current-password"
-                aria-invalid={actionData?.errors?.password ? true : undefined}
-                aria-describedby="password-error"
-              />
-              {actionData?.errors?.password && (
-                <div>
-                  {actionData.errors.password}
-                </div>
-              )}
-            </div>
-          </div>
-
-          <input type="hidden" name="redirectTo" value={redirectTo} />
-          <button
-            type="submit"
+    <main className="ri-login">
+      <Form method="post">
+        <div>
+          <label
+            htmlFor="email"
           >
-            Log in
-          </button>
+            Email address
+          </label>
+          <input
+            ref={emailRef}
+            id="email"
+            required
+            autoFocus={true}
+            name="email"
+            type="email"
+            autoComplete="email"
+            aria-invalid={actionData?.errors?.email ? true : undefined}
+            aria-describedby="email-error"
+          />
+          {actionData?.errors?.email && (
+            <span>{actionData.errors.email}</span>
+          )}
+        </div>
+        <div>
+          <label
+            htmlFor="password"
+          >
+            Password
+          </label>
+          <input
+            id="password"
+            ref={passwordRef}
+            name="password"
+            type="password"
+            autoComplete="current-password"
+            aria-invalid={actionData?.errors?.password ? true : undefined}
+            aria-describedby="password-error"
+          />
+          {actionData?.errors?.password && (
           <div>
-            <div>
-              <input
-                id="remember"
-                name="remember"
-                type="checkbox"
-              />
-              <label
-                htmlFor="remember"
-              >
-                Remember me
-              </label>
-            </div>
-            <div>
-              Don't have an account?{" "}
-              <Link
-                to={{
-                  pathname: "/join",
-                  search: searchParams.toString(),
-                }}
-              >
-                Sign up
-              </Link>
-            </div>
+            {actionData.errors.password}
           </div>
-        </Form>
-      </div>
-    </div>
+          )}
+        </div>
+        <input type="hidden" name="redirectTo" value={redirectTo} />
+
+        <button
+          type="submit"
+        >
+          Log in
+        </button>
+        <footer>
+          <div>
+            <input
+              id="remember"
+              name="remember"
+              type="checkbox"
+            />
+            <label htmlFor="remember">
+              Remember me
+            </label>
+          </div>
+          <div>
+            Don't have an account?{" "}
+            <Link
+              to={{
+                pathname: "/join",
+                search: searchParams.toString(),
+              }}
+            >
+              Sign up
+            </Link>
+          </div>
+        </footer>
+      </Form>
+    </main>
   );
 }

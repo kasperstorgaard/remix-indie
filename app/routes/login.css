@@ -1,0 +1,39 @@
+.ri-login {
+  display: flex;
+  justify-content: center;
+  padding: var(--size-fluid-5) var(--app-gutter) var(--size-fluid-2) var(--app-gutter);
+  background: var(--gray-8);
+}
+
+/* @todo: extract to shared form styles */
+.ri-login form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-fluid-2);
+  max-width: 30em;
+}
+
+.ri-login form > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.ri-login form input {
+  background: var(--gray-9);
+}
+
+.ri-login form button[type=submit] {
+  background: var(--violet-8);
+}
+
+.ri-login form footer {
+  display: grid;
+  grid-gap: var(--size-1);
+  margin-top: var(--size-2);
+}
+
+.ri-login form footer > div {
+  display: flex;
+  place-items: center;
+  gap: .5ch;
+}
