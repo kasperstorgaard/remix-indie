@@ -1,0 +1,39 @@
+.ri-notes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ri-notes > * {
+  width: 100%;
+  padding: var(--size-fluid-3) var(--app-gutter) var(--size-fluid-2);
+}
+
+.ri-notes header {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  background: var(--gray-2);
+  color: var(--gray-8);
+}
+
+.ri-notes header h1 {
+  color: var(--violet-5);
+}
+
+/* @todo: extract to different button color variant */
+.ri-notes header button[type=submit] {
+  color: var(--violet-1);
+}
+
+.ri-notes main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-fluid-1);
+}
+
+/* @todo: extract to shared hr styles */
+.ri-notes main hr {
+  margin: var(--size-fluid-2) auto;
+  width: 100%;
+}

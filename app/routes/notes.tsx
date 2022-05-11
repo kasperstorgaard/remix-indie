@@ -1,4 +1,4 @@
-import type { LoaderFunction } from "@remix-run/node";
+import type { LinksFunction, LoaderFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Form, Link, NavLink, Outlet, useLoaderData } from "@remix-run/react";
 
@@ -6,8 +6,18 @@ import { requireUserId } from "~/session.server";
 import { useUser } from "~/utils";
 import { getNoteListItems } from "~/models/note.server";
 
+import stylesUrl from './notes.css';
+import { Button, links as buttonLinks } from '../components/button/button';
+
 type LoaderData = {
   noteListItems: Awaited<ReturnType<typeof getNoteListItems>>;
+};
+
+export const links: LinksFunction = () => {
+  return [
+    ...buttonLinks(),
+    { rel: 'stylesheet', href: stylesUrl }
+  ]
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
@@ -21,52 +31,48 @@ export default function NotesPage() {
   const user = useUser();
 
   return (
-    <div>
+    <div className="ri-notes">
       <header>
         <h1>
-          <Link to=".">Notes</Link>
+          Notes
         </h1>
         <p>{user.email}</p>
         <Form action="/logout" method="post">
-          <button
+          <Button
             type="submit"
           >
             Logout
-          </button>
+          </Button>
         </Form>
       </header>
 
       <main>
-        <div>
-          <Link to="new">
-            + New Note
-          </Link>
+        <Link to="new">
+          + New Note
+        </Link>
 
-          <hr />
+        <hr />
 
-          {data.noteListItems.length === 0 ? (
-            <p>No notes yet</p>
-          ) : (
-            <ol>
-              {data.noteListItems.map((note) => (
-                <li key={note.id}>
-                  <NavLink
-                    className={({ isActive }) =>
-                      `block border-b p-4 text-xl ${isActive ? "bg-white" : ""}`
-                    }
-                    to={note.id}
-                  >
-                    📝 {note.title}
-                  </NavLink>
-                </li>
-              ))}
-            </ol>
-          )}
-        </div>
+        {data.noteListItems.length === 0 ? (
+          <p>No notes yet</p>
+        ) : (
+          <ol>
+            {data.noteListItems.map((note) => (
+              <li key={note.id}>
+                <NavLink
+                  className={({ isActive }) =>
+                    `block border-b p-4 text-xl ${isActive ? "bg-white" : ""}`
+                  }
+                  to={note.id}
+                >
+                  📝&nbsp;&nbsp;{note.title}
+                </NavLink>
+              </li>
+            ))}
+          </ol>
+        )}
 
-        <div>
-          <Outlet />
-        </div>
+        <Outlet />
       </main>
     </div>
   );
