@@ -3,6 +3,6 @@ body {
   flex-direction: column;
 }
 
-main {
+body > * {
   flex-grow: 1;
 }
