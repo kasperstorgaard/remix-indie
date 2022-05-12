@@ -2,12 +2,14 @@
   --button-color: currentColor;
   --button-bg: var(--gray-2);
 
-  padding: var(--size-fluid-1);
+  padding: var(--size-2) var(--size-3);
 
   color: var(--button-color);
+  text-transform: uppercase;
+  font-weight: 500;
+
   background-color: var(--button-bg);
   border-radius: var(--radius-conditional-2);
-  text-transform: uppercase;
 }
 
 .ri-button.-secondary {
