@@ -40,6 +40,7 @@ export default function NotesPage() {
         <Form action="/logout" method="post">
           <Button
             type="submit"
+            variation="secondary"
           >
             Logout
           </Button>
@@ -47,31 +48,30 @@ export default function NotesPage() {
       </header>
 
       <main>
-        <Link to="new">
-          + New Note
-        </Link>
+        <aside>
+          <Link to="new">
+            + New Note
+          </Link>
 
-        <hr />
-
-        {data.noteListItems.length === 0 ? (
-          <p>No notes yet</p>
-        ) : (
-          <ol>
-            {data.noteListItems.map((note) => (
-              <li key={note.id}>
-                <NavLink
-                  className={({ isActive }) =>
-                    `block border-b p-4 text-xl ${isActive ? "bg-white" : ""}`
-                  }
-                  to={note.id}
-                >
-                  📝&nbsp;&nbsp;{note.title}
-                </NavLink>
-              </li>
-            ))}
-          </ol>
-        )}
-
+          {data.noteListItems.length === 0 ? (
+            <p>No notes yet</p>
+          ) : (
+            <ol>
+              {data.noteListItems.map((note) => (
+                <li key={note.id}>
+                  <NavLink
+                    className={({ isActive }) =>
+                      `block border-b p-4 text-xl ${isActive ? "bg-white" : ""}`
+                    }
+                    to={note.id}
+                  >
+                    📝&nbsp;&nbsp;{note.title}
+                  </NavLink>
+                </li>
+              ))}
+            </ol>
+          )}
+        </aside>
         <Outlet />
       </main>
     </div>

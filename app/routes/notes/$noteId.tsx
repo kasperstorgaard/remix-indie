@@ -1,4 +1,4 @@
-import type { ActionFunction, LoaderFunction } from "@remix-run/node";
+import type { ActionFunction, LinksFunction, LoaderFunction } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { Form, useCatch, useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
@@ -7,10 +7,15 @@ import type { Note } from "~/models/note.server";
 import { deleteNote } from "~/models/note.server";
 import { getNote } from "~/models/note.server";
 import { requireUserId } from "~/session.server";
+import { Button, links as buttonLinks } from '../../components/button/button';
 
 type LoaderData = {
   note: Note;
 };
+
+export const links: LinksFunction = () => [
+  ...buttonLinks(),
+];
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const userId = await requireUserId(request);
@@ -41,11 +46,12 @@ export default function NoteDetailsPage() {
       <p>{data.note.body}</p>
       <hr />
       <Form method="post">
-        <button
+        <Button
           type="submit"
+          variation="error"
         >
           Delete
-        </button>
+        </Button>
       </Form>
     </div>
   );
