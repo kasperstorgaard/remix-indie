@@ -5,11 +5,13 @@ import * as React from "react";
 
 import { createNote } from "~/models/note.server";
 import { requireUserId } from "~/session.server";
-import { Button, links as buttonLinks } from '../../components/button/button';
+import { Button, links as buttonLinks } from '~/components/button/button';
+import formsStylesUrl from '~/components/form/form.css';
 
 export const links = () => {
   return [
     ...buttonLinks(),
+    { rel: 'stylesheet', href: formsStylesUrl }
   ]
 }
 
@@ -61,6 +63,7 @@ export default function NewNotePage() {
 
   return (
     <Form
+      className="ri-form -secondary"
       method="post"
       style={{
         display: "flex",
@@ -70,17 +73,18 @@ export default function NewNotePage() {
       }}
     >
       <div>
-        <label>
-          <span>Title: </span>
-          <input
-            ref={titleRef}
-            name="title"
-            aria-invalid={actionData?.errors?.title ? true : undefined}
-            aria-errormessage={
-              actionData?.errors?.title ? "title-error" : undefined
-            }
-          />
+        <label htmlFor="title">
+          Title:
         </label>
+        <input
+          ref={titleRef}
+          name="title"
+          id="title"
+          aria-invalid={actionData?.errors?.title ? true : undefined}
+          aria-errormessage={
+            actionData?.errors?.title ? "title-error" : undefined
+          }
+        />
         {actionData?.errors?.title && (
           <div>
             {actionData.errors.title}
@@ -89,18 +93,17 @@ export default function NewNotePage() {
       </div>
 
       <div>
-        <label>
-          <span>Body: </span>
-          <textarea
-            ref={bodyRef}
-            name="body"
-            rows={8}
-            aria-invalid={actionData?.errors?.body ? true : undefined}
-            aria-errormessage={
-              actionData?.errors?.body ? "body-error" : undefined
-            }
-          />
-        </label>
+        <label htmlFor="body">Body: </label>
+        <textarea
+          ref={bodyRef}
+          name="body"
+          id="body"
+          rows={8}
+          aria-invalid={actionData?.errors?.body ? true : undefined}
+          aria-errormessage={
+            actionData?.errors?.body ? "body-error" : undefined
+          }
+        />
         {actionData?.errors?.body && (
           <div>
             {actionData.errors.body}
