@@ -13,6 +13,8 @@ import { verifyLogin } from "~/models/user.server";
 import { safeRedirect, validateEmail } from "~/utils";
 
 import stylesUrl from './login.css';
+import formsUrl from '../components/form/form.css';
+import { Button, links as buttonLinks } from '../components/button/button';
 
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request);
@@ -75,6 +77,8 @@ export const action: ActionFunction = async ({ request }) => {
 export const links: LinksFunction = () => {
   return [
     { rel: 'stylesheet', href: stylesUrl },
+    { rel: 'stylesheet', href: formsUrl },
+    ...buttonLinks(),
   ];
 }
 
@@ -101,7 +105,7 @@ export default function LoginPage() {
 
   return (
     <main className="ri-login">
-      <Form method="post">
+      <Form method="post" className="ri-form">
         <div>
           <label
             htmlFor="email"
@@ -146,11 +150,9 @@ export default function LoginPage() {
         </div>
         <input type="hidden" name="redirectTo" value={redirectTo} />
 
-        <button
-          type="submit"
-        >
+        <Button type="submit">
           Log in
-        </button>
+        </Button>
         <footer>
           <div>
             <input

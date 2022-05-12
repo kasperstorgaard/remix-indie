@@ -1,0 +1,45 @@
+/* @todo: extract to shared form styles */
+.ri-form {
+  --form-input-bg: var(--gray-9);
+  --form-input-color: var(--gray-1);
+  --form-input-caret: var(--violet-2);
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-fluid-2);
+  max-width: 30em;
+}
+
+.ri-form.-secondary {
+  --form-input-bg: var(--gray-1);
+  --form-input-color: var(--gray-9);
+  --form-input-caret: var(--violet-8);
+}
+
+.ri-form > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.ri-form input,
+.ri-form textarea {
+  background: var(--form-input-bg);
+  color: var(--form-input-color);
+  caret-color: var(--form-input-caret);
+}
+
+.ri-form button[type=submit] {
+  background: var(--violet-8);
+}
+
+.ri-form footer {
+  display: grid;
+  grid-gap: var(--size-1);
+  margin-top: var(--size-2);
+}
+
+.ri-form footer > div {
+  display: flex;
+  place-items: center;
+  gap: .5ch;
+}
