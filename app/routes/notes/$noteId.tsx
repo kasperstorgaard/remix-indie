@@ -8,6 +8,7 @@ import { deleteNote } from "~/models/note.server";
 import { getNote } from "~/models/note.server";
 import { requireUserId } from "~/session.server";
 import { Button, links as buttonLinks } from '../../components/button/button';
+import stylesUrl from './$noteId.css';
 
 type LoaderData = {
   note: Note;
@@ -15,6 +16,7 @@ type LoaderData = {
 
 export const links: LinksFunction = () => [
   ...buttonLinks(),
+  { rel: 'stylesheet', href: stylesUrl }
 ];
 
 export const loader: LoaderFunction = async ({ request, params }) => {
@@ -41,7 +43,7 @@ export default function NoteDetailsPage() {
   const data = useLoaderData() as LoaderData;
 
   return (
-    <div>
+    <div className="ri-note">
       <h3>{data.note.title}</h3>
       <p>{data.note.body}</p>
       <hr />
