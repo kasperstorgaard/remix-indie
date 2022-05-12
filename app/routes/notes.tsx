@@ -7,7 +7,7 @@ import { useUser } from "~/utils";
 import { getNoteListItems } from "~/models/note.server";
 
 import stylesUrl from './notes.css';
-import { Button, links as buttonLinks } from '../components/button/button';
+import { Button, links as buttonLinks } from '~/components/button/button';
 
 type LoaderData = {
   noteListItems: Awaited<ReturnType<typeof getNoteListItems>>;
@@ -16,7 +16,7 @@ type LoaderData = {
 export const links: LinksFunction = () => {
   return [
     ...buttonLinks(),
-    { rel: 'stylesheet', href: stylesUrl }
+    { rel: 'stylesheet', href: stylesUrl },
   ]
 };
 
