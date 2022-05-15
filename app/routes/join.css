@@ -1,0 +1,6 @@
+.ri-join {
+  display: flex;
+  justify-content: center;
+  padding: var(--size-fluid-5) var(--app-gutter) var(--size-fluid-2) var(--app-gutter);
+  background: var(--gray-8);
+}

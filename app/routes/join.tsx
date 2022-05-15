@@ -1,5 +1,6 @@
 import type {
   ActionFunction,
+  LinksFunction,
   LoaderFunction,
   MetaFunction,
 } from "@remix-run/node";
@@ -11,6 +12,10 @@ import { getUserId, createUserSession } from "~/session.server";
 
 import { createUser, getUserByEmail } from "~/models/user.server";
 import { safeRedirect, validateEmail } from "~/utils";
+import { Button, links as buttonLinks } from '../components/button/button';
+
+import formsUrl from '~/components/form/form.css';
+import stylesUrl from './join.css';
 
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request);
@@ -24,6 +29,12 @@ interface ActionData {
     password?: string;
   };
 }
+
+export const links: LinksFunction = () => [
+  ...buttonLinks(),
+  { rel: 'stylesheet', href: stylesUrl },
+  { rel: 'stylesheet', href: formsUrl },
+];
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
@@ -83,6 +94,7 @@ export default function Join() {
   const emailRef = React.useRef<HTMLInputElement>(null);
   const passwordRef = React.useRef<HTMLInputElement>(null);
 
+  // @todo: use autofocus?
   React.useEffect(() => {
     if (actionData?.errors?.email) {
       emailRef.current?.focus();
@@ -92,80 +104,74 @@ export default function Join() {
   }, [actionData]);
 
   return (
-    <div>
-      <div>
-        <Form method="post">
-          <div>
-            <label
-              htmlFor="email"
-            >
-              Email address
-            </label>
-            <div>
-              <input
-                ref={emailRef}
-                id="email"
-                required
-                autoFocus={true}
-                name="email"
-                type="email"
-                autoComplete="email"
-                aria-invalid={actionData?.errors?.email ? true : undefined}
-                aria-describedby="email-error"
-              />
-              {actionData?.errors?.email && (
-                <div>
-                  {actionData.errors.email}
-                </div>
-              )}
-            </div>
-          </div>
-
-          <div>
-            <label
-              htmlFor="password"
-            >
-              Password
-            </label>
-            <div>
-              <input
-                id="password"
-                ref={passwordRef}
-                name="password"
-                type="password"
-                autoComplete="new-password"
-                aria-invalid={actionData?.errors?.password ? true : undefined}
-                aria-describedby="password-error"
-              />
-              {actionData?.errors?.password && (
-                <div>
-                  {actionData.errors.password}
-                </div>
-              )}
-            </div>
-          </div>
-
-          <input type="hidden" name="redirectTo" value={redirectTo} />
-          <button
-            type="submit"
+    <main className="ri-join">
+      <Form method="post" className="ri-form">
+        <div>
+          <label
+            htmlFor="email"
           >
-            Create Account
-          </button>
-          <div>
+            Email address
+          </label>
+          <input
+            ref={emailRef}
+            id="email"
+            required
+            autoFocus={true}
+            name="email"
+            type="email"
+            autoComplete="email"
+            aria-invalid={actionData?.errors?.email ? true : undefined}
+            aria-describedby="email-error"
+          />
+          {actionData?.errors?.email && (
             <div>
-              Already have an account?{" "}
-              <Link
-                to={{
-                  pathname: "/login",
-                  search: searchParams.toString(),
-                }}
-              >
-                Log in
-              </Link>
+              {actionData.errors.email}
             </div>
+          )}
+        </div>
+
+        <div>
+          <label
+            htmlFor="password"
+          >
+            Password
+          </label>
+          <input
+            id="password"
+            ref={passwordRef}
+            name="password"
+            type="password"
+            autoComplete="new-password"
+            aria-invalid={actionData?.errors?.password ? true : undefined}
+            aria-describedby="password-error"
+          />
+          {actionData?.errors?.password && (
+            <div>
+              {actionData.errors.password}
+            </div>
+          )}
+        </div>
+
+        <input type="hidden" name="redirectTo" value={redirectTo} />
+        <Button
+          type="submit"
+        >
+          Create Account
+        </Button>
+        <footer>
+          <div>
+            Already have an account?{" "}
+            <Link
+              to={{
+                pathname: "/login",
+                search: searchParams.toString(),
+              }}
+            >
+              Log in
+            </Link>
           </div>
-        </Form>
-      </div>
-    </div>
+        </footer>
+      </Form>
+    </main>
   );
 }
