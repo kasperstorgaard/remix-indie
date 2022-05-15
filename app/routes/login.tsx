@@ -10,7 +10,7 @@ import * as React from "react";
 
 import { createUserSession, getUserId } from "~/session.server";
 import { verifyLogin } from "~/models/user.server";
-import { safeRedirect, validateEmail } from "~/utils";
+import { validateEmail, validateRedirect } from "~/utils";
 
 import stylesUrl from './login.css';
 import formsUrl from '../components/form/form.css';
@@ -33,7 +33,12 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
   const email = formData.get("email");
   const password = formData.get("password");
-  const redirectTo = safeRedirect(formData.get("redirectTo"), "/notes");
+
+  let redirectTo = formData.get("redirectTo")
+  if (!validateRedirect(redirectTo)) {
+    redirectTo = "/notes";
+  }
+
   const remember = formData.get("remember");
 
   if (!validateEmail(email)) {

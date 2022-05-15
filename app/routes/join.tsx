@@ -11,7 +11,7 @@ import * as React from "react";
 import { getUserId, createUserSession } from "~/session.server";
 
 import { createUser, getUserByEmail } from "~/models/user.server";
-import { safeRedirect, validateEmail } from "~/utils";
+import { validateRedirect, validateEmail } from "~/utils";
 import { Button, links as buttonLinks } from '../components/button/button';
 
 import formsUrl from '~/components/form/form.css';
@@ -40,7 +40,10 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
   const email = formData.get("email");
   const password = formData.get("password");
-  const redirectTo = safeRedirect(formData.get("redirectTo"), "/");
+  let redirectTo = formData.get("redirectTo");
+  if (!validateRedirect(redirectTo)) {
+    redirectTo = "/";
+  }
 
   if (!validateEmail(email)) {
     return json<ActionData>(
