@@ -34,7 +34,7 @@ export const action: ActionFunction = async ({ request }) => {
   const email = formData.get("email");
   const password = formData.get("password");
 
-  let redirectTo = formData.get("redirectTo")
+  let redirectTo = formData.get("redirectTo") ?? '';
   if (!validateRedirect(redirectTo)) {
     redirectTo = "/notes";
   }
